@@ -1,0 +1,43 @@
+pipeline {
+    agent {label 'Test'}
+
+    stages {
+        stage ('Code') {
+            steps {
+
+                echo 'Pull The Code From GitHub Repository..'
+                git url: 'https://github.com/YogeshPisal216/Docker-Project.git', branch:'main'
+ 
+            }
+
+        }
+
+        stage ('Build') {
+            steps {
+
+                echo "Build The Code.."
+                sh 'docker build -t DockerProject . '
+                echo 'Building Code IS Completed.'
+
+            }
+        }
+
+        stage ('Test') {
+            steps {
+
+                echo "Test The Code.."
+
+            }
+        }
+
+        stage ('Deploy') {
+            steps {
+
+                echo "Deploy The Code.."
+                sh 'docker run -d -p 5000:5000 DockerProject'
+                cho 'Container IS Deployed.'
+
+            }
+        }
+    }
+}
